@@ -1,11 +1,109 @@
-'use client';
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowUpRight } from 'lucide-react';
-import { content } from '@/data/content';
-export default function About(){const root=useRef<HTMLElement>(null);useEffect(()=>{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;gsap.registerPlugin(ScrollTrigger);const ctx=gsap.context(()=>{root.current?.querySelectorAll('.about-paragraph').forEach(p=>{gsap.fromTo(p.querySelectorAll('.word'),{opacity:.2},{opacity:1,stagger:.012,ease:'none',scrollTrigger:{trigger:p,start:'top 88%',end:'bottom 50%',scrub:true}})})},root);return()=>ctx.revert()},[]);return <section id="about" className="about-stage bright-section section-pad" ref={root} aria-labelledby="about-heading"><div className="container-grid">
- <div className="section-kicker dark-kicker"><span>{content.about.eyebrow}</span><span>BEHIND THE BUILD / 001</span></div>
- <div className="about-layout"><div className="about-sticky"><h2 id="about-heading" className="section-title oversized">{content.about.display.line1}<br/><em>{content.about.display.line2}</em><br/>{content.about.display.line3}<span className="star-big">✳</span></h2><figure className="portrait-frame"><img src={content.about.portrait} alt={content.about.portraitAlt} loading="lazy" decoding="async"/><figcaption>{content.about.portraitNote} <ArrowUpRight size={14}/></figcaption></figure></div>
- <div className="about-body"><span className="mono about-dash">↳ THE DEVELOPER BEHIND THE PIXELS</span><h3 className="about-lead">Sharp interfaces. <span>Reliable engineering.</span></h3><div className="about-story">{content.about.paragraphs.map((p,i)=><p className="about-paragraph" aria-label={p} key={i}>{p.split(/(\s+)/).map((w,j)=><span className="word" aria-hidden="true" key={j}>{w}</span>)}</p>)}</div><div className="about-chips">{content.about.chips.map(c=><span key={c}>{c}</span>)}</div><div className="about-focus"><p className="mono focus-label">{content.about.focusLabel}</p>{content.about.focus.map(f=><div className="about-focus-row" key={f.number}><span className="mono">{f.number}</span><h4>{f.title}</h4><p>{f.description}</p><ArrowUpRight size={18}/></div>)}</div></div></div>
- </div></section>}
+'use client'
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { ArrowUpRight } from 'lucide-react'
+import { content } from '@/data/content'
+import Image from 'next/image'
+export default function About () {
+  const root = useRef<HTMLElement>(null)
+  useEffect(() => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    gsap.registerPlugin(ScrollTrigger)
+    const ctx = gsap.context(() => {
+      root.current?.querySelectorAll('.about-paragraph').forEach(p => {
+        gsap.fromTo(
+          p.querySelectorAll('.word'),
+          { opacity: 0.2 },
+          {
+            opacity: 1,
+            stagger: 0.012,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: p,
+              start: 'top 88%',
+              end: 'bottom 50%',
+              scrub: true
+            }
+          }
+        )
+      })
+    }, root)
+    return () => ctx.revert()
+  }, [])
+  return (
+    <section
+      id='about'
+      className='about-stage bright-section section-pad'
+      ref={root}
+      aria-labelledby='about-heading'
+    >
+      <div className='container-grid'>
+        <div className='section-kicker dark-kicker'>
+          <span>{content.about.eyebrow}</span>
+          <span>BEHIND THE BUILD / 001</span>
+        </div>
+        <div className='about-layout'>
+          <div className='about-sticky'>
+            <h2 id='about-heading' className='section-title oversized'>
+              {content.about.display.line1}
+              <br />
+              <em>{content.about.display.line2}</em>
+              <br />
+              {content.about.display.line3}
+              <span className='star-big'>✳</span>
+            </h2>
+            <figure className='portrait-frame'>
+              <Image
+                src={content.about.portrait}
+                alt={content.about.portraitAlt}
+                loading='lazy'
+                decoding='async'
+                width={400}
+                height={500}
+              />
+              <figcaption>
+                {content.about.portraitNote} <ArrowUpRight size={14} />
+              </figcaption>
+            </figure>
+          </div>
+          <div className='about-body'>
+            <span className='mono about-dash'>
+              ↳ THE DEVELOPER BEHIND THE PIXELS
+            </span>
+            <h3 className='about-lead'>
+              Sharp interfaces. <span>Reliable engineering.</span>
+            </h3>
+            <div className='about-story'>
+              {content.about.paragraphs.map((p, i) => (
+                <p className='about-paragraph' aria-label={p} key={i}>
+                  {p.split(/(\s+)/).map((w, j) => (
+                    <span className='word' aria-hidden='true' key={j}>
+                      {w}
+                    </span>
+                  ))}
+                </p>
+              ))}
+            </div>
+            <div className='about-chips'>
+              {content.about.chips.map(c => (
+                <span key={c}>{c}</span>
+              ))}
+            </div>
+            <div className='about-focus'>
+              <p className='mono focus-label'>{content.about.focusLabel}</p>
+              {content.about.focus.map(f => (
+                <div className='about-focus-row' key={f.number}>
+                  <span className='mono'>{f.number}</span>
+                  <h4>{f.title}</h4>
+                  <p>{f.description}</p>
+                  <ArrowUpRight size={18} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
