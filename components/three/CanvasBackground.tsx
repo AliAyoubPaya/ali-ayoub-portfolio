@@ -1,0 +1,6 @@
+'use client';
+import {useEffect,useState} from 'react';
+import dynamic from 'next/dynamic';
+import {Canvas} from '@react-three/fiber';
+const Scene=dynamic(()=>import('./Scene'),{ssr:false});
+export default function CanvasBackground(){const[enabled,setEnabled]=useState(false),[mobile,setMobile]=useState(false),[reduced,setReduced]=useState(false);useEffect(()=>{const mqMobile=matchMedia('(max-width:900px)'),mqReduce=matchMedia('(prefers-reduced-motion:reduce)');const check=()=>{setMobile(mqMobile.matches);setReduced(mqReduce.matches)};check();mqMobile.addEventListener('change',check);mqReduce.addEventListener('change',check);try{const c=document.createElement('canvas');setEnabled(!!(c.getContext('webgl2')||c.getContext('webgl')))}catch{setEnabled(false)}return()=>{mqMobile.removeEventListener('change',check);mqReduce.removeEventListener('change',check)}},[]);return <div className="three-layer" aria-hidden="true"><div className="three-fallback"/>{enabled&&!reduced&&<Canvas dpr={[1,1.75]} gl={{alpha:true,antialias:!mobile,powerPreference:'high-performance'}} camera={{fov:42,position:[0,0,9],near:.1,far:100}} style={{position:'absolute',inset:0}}><Scene mobile={mobile} reduced={reduced}/></Canvas>}</div>}

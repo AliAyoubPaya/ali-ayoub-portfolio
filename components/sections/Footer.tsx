@@ -1,0 +1,2 @@
+import {ArrowUpRight,ArrowUp} from 'lucide-react';import {content} from '@/data/content';
+export default function Footer(){return <footer className="footer"><div className="container-grid footer-inner"><p>{content.footer} <span aria-hidden="true">✳</span> BUILT WITH CARE.</p><div className="footer-links"><a href={content.contact.linkedin} rel="noopener noreferrer" target="_blank">LINKEDIN <ArrowUpRight size={12}/></a><a href={`mailto:${content.contact.email}`}>EMAIL</a><a href="#hero">BACK TO TOP <ArrowUp size={14}/></a></div></div></footer>}
