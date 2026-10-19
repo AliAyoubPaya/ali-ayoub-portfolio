@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { content } from '@/data/content';
 import './globals.css';
 
@@ -21,5 +22,5 @@ export const metadata: Metadata = {
 export const viewport: Viewport = { width: 'device-width', initialScale: 1, themeColor: '#0C0B10' };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return <html lang="en"><body className={`${geist.variable} ${mono.variable}`}>{children}</body></html>;
+  return <html lang="en"><body className={`${geist.variable} ${mono.variable}`}>{children}<SpeedInsights /></body></html>;
 }
